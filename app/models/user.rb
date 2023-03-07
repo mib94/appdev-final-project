@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :reviews, dependent: :destroy
   has_many :favorites, dependent: :destroy
+  has_many :favorited_movies, through: :favorites, class_name: "Movie", source: :movie
   has_many :sent_follow_requests, foreign_key: :sender_id, class_name: "FollowRequest", dependent: :destroy
   has_many :accepted_sent_follow_requests, -> { accepted }, foreign_key: :sender_id, class_name: "FollowRequest"
   has_many :received_follow_requests, foreign_key: :recipient_id, class_name: "FollowRequest", dependent: :destroy
