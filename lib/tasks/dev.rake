@@ -42,14 +42,14 @@ task sample_data: :environment do
       )
     )
 
-    p user.errors.full_messages
+    p user.errors.full_messages if user.errors.full_messages.present?
   end
 
   ## Create Movies
   movies.each do |movie_params|
     movie = Movie.create(movie_params)
 
-    p movie.errors.full_messages
+    p movie.errors.full_messages if movie.errors.full_messages.present?
   end
 
   users = User.all
@@ -64,7 +64,7 @@ task sample_data: :environment do
           status: FollowRequest.statuses.values.sample
         )
 
-        p first_user_follow_request.errors.full_messages
+        p first_user_follow_request.errors.full_messages if first_user_follow_request.errors.full_messages.present?
       end
 
       if rand < 0.75
@@ -73,7 +73,7 @@ task sample_data: :environment do
           status: FollowRequest.statuses.values.sample
         )
 
-        p second_user_follow_request.errors.full_messages
+        p second_user_follow_request.errors.full_messages if second_user_follow_request.errors.full_messages.present?
       end
     end
   end
@@ -84,11 +84,11 @@ task sample_data: :environment do
     users.sample(rand(10..20)).each do |user|
       if rand < 0.5
         fav = user.favorites.create(movie: movie)
-        p fav.errors.full_messages
+        p fav.errors.full_messages if fav.errors.full_messages.present?
       end
       review = user.reviews.create(rating: rand(1..5), text: Faker::Lorem.paragraph(sentence_count: 2), movie: movie)
 
-      p review.errors.full_messages
+      p review.errors.full_messages if review.errors.full_messages.present?
     end
   end
 
