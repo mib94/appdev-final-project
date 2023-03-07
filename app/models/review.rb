@@ -5,6 +5,6 @@ class Review < ApplicationRecord
   validates :rating, numericality: {
     only_integer: true,
     greater_than: 0,
-    less_than:    5
+    less_than:    6
   }
 end
