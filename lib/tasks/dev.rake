@@ -3,6 +3,7 @@ task sample_data: :environment do
   starting = Time.now
 
   FollowRequest.delete_all
+  Favorite.delete_all
   Comment.delete_all
   Movie.delete_all
   Review.delete_all
@@ -77,10 +78,14 @@ task sample_data: :environment do
     end
   end
 
-  ## Create Reviews for movies against multiple random users
+  ## Create Reviews for movies against multiple random users and creates favorite for random users
 
   movies.each do |movie|
     users.sample(rand(10..20)).each do |user|
+      if rand < 0.5
+        fav = user.favorites.create(movie: movie)
+        p fav.errors.full_messages
+      end
       review = user.reviews.create(rating: rand(1..5), text: Faker::Lorem.paragraph(sentence_count: 2), movie: movie)
 
       p review.errors.full_messages
@@ -91,6 +96,7 @@ task sample_data: :environment do
   p "It took #{(ending - starting).to_i} seconds to create sample data."
   p "There are now #{User.count} users."
   p "There are now #{FollowRequest.count} follow requests."
-  p "There are now #{Movie.count} moview."
+  p "There are now #{Movie.count} movies."
+  p "There are now #{Favorite.count} favorites."
   p "There are now #{Review.count} reviews."
 end
