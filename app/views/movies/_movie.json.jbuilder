@@ -6,3 +6,5 @@ end
 json.reviews do
   json.array! movie.reviews, partial: "reviews/review", as: :review
 end
+json.favorited current_user.favorites.find_by_movie_id(movie.id).present?
+json.rated current_user.reviews.find_by_movie_id(movie.id).present?
