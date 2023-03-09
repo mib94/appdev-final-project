@@ -3,7 +3,15 @@ class MoviesController < ApplicationController
 
   # GET /movies or /movies.json
   def index
-    @movies = Movie.all
+    @movies = Movie.first(10)
+  end
+
+  def feed
+    @movies = current_user.feed
+  end
+
+  def discover
+    @movies = Movie.discover
   end
 
   # GET /movies/1 or /movies/1.json

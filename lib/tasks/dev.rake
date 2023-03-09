@@ -86,9 +86,11 @@ task sample_data: :environment do
         fav = user.favorites.create(movie: movie)
         p fav.errors.full_messages if fav.errors.full_messages.present?
       end
-      review = user.reviews.create(rating: rand(1..5), text: Faker::Lorem.paragraph(sentence_count: 2), movie: movie)
+      if rand < 0.2
+        review = user.reviews.create(rating: rand(1..5), text: Faker::Lorem.paragraph(sentence_count: 2), movie: movie)
 
-      p review.errors.full_messages if review.errors.full_messages.present?
+        p review.errors.full_messages if review.errors.full_messages.present?
+      end
     end
   end
 

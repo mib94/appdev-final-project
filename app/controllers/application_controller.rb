@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_user_from_token!
-    user_token = headers[:user_token]
+    user_token = params[:user_token]
     user       = user_token && User.find_by_authentication_token(user_token)
 
     if user

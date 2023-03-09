@@ -57,6 +57,15 @@ class FavoritesController < ApplicationController
     end
   end
 
+  def toggle
+    fav = current_user.favorites.find_by_movie_id(params[:favorioted][:movie_id])
+    if fav.present?
+      fav.destroy
+    else
+      current_user.favorites.create(movie_id: params[:favorioted][:movie_id])
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_favorite
